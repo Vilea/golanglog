@@ -15,7 +15,7 @@ const (
 	LFatal
 )
 
-type golanglogger struct {
+type Golanglogger struct {
 	FileName      string
 	Level         uint
 	PrintToStdout bool
@@ -23,8 +23,8 @@ type golanglogger struct {
 	file *os.File
 }
 
-func NewLogger(file string, printToStdout bool) *golanglogger {
-	golanglogger := golanglogger{FileName: file, PrintToStdout: printToStdout}
+func NewLogger(file string, printToStdout bool) *Golanglogger {
+	golanglogger := Golanglogger{FileName: file, PrintToStdout: printToStdout}
 	var err error
 
 	if file != "" {
@@ -35,37 +35,37 @@ func NewLogger(file string, printToStdout bool) *golanglogger {
 	return &golanglogger
 }
 
-func (l *golanglogger) Debug(args ...interface{}) {
+func (l *Golanglogger) Debug(args ...interface{}) {
 	if l.Level <= LDebug {
 		l.Log("DEBUG", args...)
 	}
 }
 
-func (l *golanglogger) Info(args ...interface{}) {
+func (l *Golanglogger) Info(args ...interface{}) {
 	if l.Level <= LInfo {
 		l.Log("INFO", args...)
 	}
 }
 
-func (l *golanglogger) Warn(args ...interface{}) {
+func (l *Golanglogger) Warn(args ...interface{}) {
 	if l.Level <= LInfo {
 		l.Log("WARN", args...)
 	}
 }
 
-func (l *golanglogger) Error(args ...interface{}) {
+func (l *Golanglogger) Error(args ...interface{}) {
 	if l.Level <= LInfo {
 		l.Log("ERROR", args...)
 	}
 }
 
-func (l *golanglogger) Fatal(args ...interface{}) {
+func (l *Golanglogger) Fatal(args ...interface{}) {
 	if l.Level <= LInfo {
 		panic(l.Log("FATAL", args...))
 	}
 }
 
-func (l *golanglogger) Log(tag string, args ...interface{}) (msg string) {
+func (l *Golanglogger) Log(tag string, args ...interface{}) (msg string) {
 	// 2017/12/28 16:53:12
 	timeFmt := "2006/01/2 15:04:05 MST"
 	timeStamp := time.Now().Format(timeFmt)
